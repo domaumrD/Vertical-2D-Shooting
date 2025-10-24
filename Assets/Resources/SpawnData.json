@@ -1,0 +1,57 @@
+[
+  {
+    "delay": 1,
+    "type": "S",
+    "point": 1
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 1
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 1
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 1
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 1
+  },
+  {
+    "delay": 1,
+    "type": "S",
+    "point": 3
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 3
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 3
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 3
+  },
+  {
+    "delay": 0.2,
+    "type": "S",
+    "point": 3
+  },
+  {
+    "delay": 2,
+    "type": "M",
+    "point": 2
+  }
+]
