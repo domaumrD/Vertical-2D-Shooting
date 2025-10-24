@@ -30,44 +30,40 @@ public class GeneratorEnemyManager : MonoBehaviour
 
         TextAsset spawnData = Resources.Load<TextAsset>("SpawnData");
         spawnDatas = JsonConvert.DeserializeObject<List<Spawn>>(spawnData.text);
-
-        foreach (Spawn spawn in spawnDatas)
-        {
-            Debug.Log($"{spawn.point}, {spawn.delay}, {spawn.type}");
-        }
-
-        for(dataIdx = 0; dataIdx < spawnDatas.Count; dataIdx++)
-        {
-            GenerateEnemy(spawnDatas[dataIdx].point, spawnDatas[dataIdx].delay, spawnDatas[dataIdx].type);
-        }
-
     }
 
     
     void Update()
-    {        
+    {
+        delta += Time.deltaTime;
+
+        if (dataIdx < spawnDatas.Count)
+        {
+            if (isStop == true || delta < spawnDatas[dataIdx].delay)
+                return;
+
+            delta = 0f;
+            GenerateEnemy(spawnDatas[dataIdx].point, spawnDatas[dataIdx].delay, spawnDatas[dataIdx].type);
+            dataIdx++;
+        }
+
         /*if(isStop == false)
         {
             GenerateEnemy();
         }*/
     }
 
-    IEnumerator CreateEnemy(int point, float time, int typeIdx)
-    {
-        yield return new WaitForSeconds(time);
-    }
-
     public void GenerateEnemy(int point, float delayTime, string type)
     {
         int typeIdx = 0;
 
-        switch(type)
+        switch (type)
         {
             case "S":
                 typeIdx = 0;
                 break;
             case "M":
-                 typeIdx = 1;
+                typeIdx = 1;
                 break;
             case "L":
                 typeIdx = 2;
@@ -81,7 +77,13 @@ public class GeneratorEnemyManager : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(CreateEnemy(point,delayTime, typeIdx));
+        Debug.Log($"idx : {typeIdx}");
+
+        GameObject go = Instantiate(enemyPrefabs[typeIdx], prefabParent.transform);
+        go.transform.position = spanPoints[point].position;
+        Enemy enemy = go.GetComponent<Enemy>();
+        enemy.action = gameMain.EnemyDie;
+        enemy.addScoreAction = gameMain.AddScore;
     }
 
     public void GenerateEnemy()
