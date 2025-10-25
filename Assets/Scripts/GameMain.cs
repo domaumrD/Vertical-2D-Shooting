@@ -1,5 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMain : MonoBehaviour
@@ -93,9 +93,13 @@ public class GameMain : MonoBehaviour
             if (child == null)
                 continue;
 
-            int tempScore = child.GetComponent<Enemy>().GetScore();
-            this.AddScore(tempScore);
-            Destroy(child.gameObject);
+            if(child.GetComponent<Enemy>() != null)
+            {
+                int tempScore = child.GetComponent<Enemy>().score;
+                this.AddScore(tempScore);
+                Destroy(child.gameObject);
+            }
+          
         }
 
         foreach (Transform child in enemyBulletParent.transform)

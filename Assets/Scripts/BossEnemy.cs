@@ -120,7 +120,7 @@ public class BossEnemy : MonoBehaviour
             AddPatternIndex();
             this.isCoolTime = true;
         }
-          
+        BulletManager.Instance.CreateSingleShot(shootingPoint);       
         Debug.Log("앞으로 4발 발사");
       
     }
@@ -133,6 +133,9 @@ public class BossEnemy : MonoBehaviour
             AddPatternIndex();
             this.isCoolTime = true;
         }
+        
+        BulletManager.Instance.CreateBossShotGun(shootingPoint);
+ 
         Debug.Log("플레이어 방향으로 샷건");
   
     }
@@ -145,6 +148,7 @@ public class BossEnemy : MonoBehaviour
             AddPatternIndex();
             this.isCoolTime = true;
         }
+        BulletManager.Instance.CreateBossArcShot(shootingPoint, currentPatternCount, maxPatternIndex[patternIndex]);
         Debug.Log("부채모양으로 발사");
 
     }
@@ -157,6 +161,7 @@ public class BossEnemy : MonoBehaviour
             AddPatternIndex();
             this.isCoolTime = true;
         }
+        BulletManager.Instance.CreateBossAroundShot(shootingPoint);
         Debug.Log("원 형태로 전체 공격");
 
     }
