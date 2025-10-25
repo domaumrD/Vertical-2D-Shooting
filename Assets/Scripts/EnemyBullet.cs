@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
+    public int bulletIndex;
     public Vector3 toMoveDirection;
-
     public float moveSpeed;
+
+    public Action<GameObject, int> ReturnEnemyBulletAction;
    
     void Update()
     {
@@ -15,14 +18,14 @@ public class EnemyBullet : MonoBehaviour
     {
         this.transform.Translate(toMoveDirection * moveSpeed * Time.deltaTime);
 
-        if (this.transform.position.y < -7)
+        if (this.transform.position.y < -7 || this.transform.position.y > 7)
         {
-            Destroy(this.gameObject);
+            UseCompleteEnemyBullet();
         }
 
-        if (this.transform.position.y > 7)
+        if (this.transform.position.x < -7 || this.transform.position.x > 7)
         {
-            Destroy(this.gameObject);
+            UseCompleteEnemyBullet();
         }
     }
 
@@ -36,11 +39,16 @@ public class EnemyBullet : MonoBehaviour
         this.toMoveDirection = Vector3.down;
     }
 
+    public void UseCompleteEnemyBullet()
+    {
+        ReturnEnemyBulletAction(this.gameObject, bulletIndex);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if( collision.name == "ShieldPrefab(Clone)")
         {
-            Destroy(this.gameObject);
+            UseCompleteEnemyBullet();
         }
     }
 

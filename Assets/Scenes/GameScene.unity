@@ -2189,6 +2189,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+--- !u!1 &1534026014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534026015}
+  m_Layer: 0
+  m_Name: PlayerBulletParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1534026015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534026014}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1568071150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,14 +2312,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAroundFlag: 1
-  playerBullet1Prefab: {fileID: 5497860965531047675, guid: 029ea8f263c3e7e438ac4e9afa03cc41, type: 3}
-  enemyBullet0Prefab: {fileID: 189118894987226829, guid: 3ebc5ebf1fa329a409b7e74808deb4b5, type: 3}
-  enemyBullet1Prefab: {fileID: 3340522703667066107, guid: 90b913de70d47a849854f9ec0ef48e99, type: 3}
+  playerBulletParent: {fileID: 1534026014}
+  playerBulletPrefab:
+  - {fileID: 5497860965531047675, guid: 029ea8f263c3e7e438ac4e9afa03cc41, type: 3}
   enemyBulletParent: {fileID: 1216091859}
-  bossBullet0Prefab: {fileID: 8267873090014522910, guid: e2e947ae653001c4b94b170490e1b162, type: 3}
-  bossBullet1Prefab: {fileID: 8054084114366239425, guid: faeb6c3d2d5fb19419286c8aaf1e4ef3, type: 3}
-  bossBullet2Prefab: {fileID: 824262187889642743, guid: c9c261dc1ca44ed4d8a830cf1a57efd5, type: 3}
-  bossBullet3Prefab: {fileID: 2615595407633893335, guid: 3aaa83c99d912424cb22facc4d38da56, type: 3}
+  enemyBulletPrefab:
+  - {fileID: 189118894987226829, guid: 3ebc5ebf1fa329a409b7e74808deb4b5, type: 3}
+  - {fileID: 3340522703667066107, guid: 90b913de70d47a849854f9ec0ef48e99, type: 3}
+  bossBulletPrefab:
+  - {fileID: 8267873090014522910, guid: e2e947ae653001c4b94b170490e1b162, type: 3}
+  - {fileID: 8054084114366239425, guid: faeb6c3d2d5fb19419286c8aaf1e4ef3, type: 3}
+  - {fileID: 824262187889642743, guid: c9c261dc1ca44ed4d8a830cf1a57efd5, type: 3}
+  - {fileID: 2615595407633893335, guid: 3aaa83c99d912424cb22facc4d38da56, type: 3}
 --- !u!1 &1674023483
 GameObject:
   m_ObjectHideFlags: 0
@@ -3129,3 +3164,4 @@ SceneRoots:
   - {fileID: 1813122722}
   - {fileID: 1815313094}
   - {fileID: 1861488972}
+  - {fileID: 1534026015}

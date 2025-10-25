@@ -66,8 +66,10 @@ public class BossEnemy : MonoBehaviour
         if (collision.name == "Player Bullet 1(Clone)")
         {
             StartCoroutine(Hit());
-            hp -= collision.GetComponent<PlayerBullet>().GetBulletDamage();
-            Destroy(collision.gameObject);
+            PlayerBullet playerBullet = collision.GetComponent<PlayerBullet>();
+
+            hp -= playerBullet.GetBulletDamage();
+            playerBullet.ReturnPlayerBulletPool();
         }
 
         if (this.hp <= 0)

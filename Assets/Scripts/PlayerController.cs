@@ -112,13 +112,16 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.name == "Enemy Bullet 0(Clone)")
         {
+            EnemyBullet enemyBullet = collision.GetComponent<EnemyBullet>();
+            enemyBullet.UseCompleteEnemyBullet();
             Destroy(collision.gameObject);
             isHit = true;
             hitAction();
         }
         else if (collision.name == "Enemy Bullet 1(Clone)")
         {
-            Destroy(collision.gameObject);
+            EnemyBullet enemyBullet = collision.GetComponent<EnemyBullet>();
+            enemyBullet.UseCompleteEnemyBullet();
             isHit = true;
             hitAction();
         }

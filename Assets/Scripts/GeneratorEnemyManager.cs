@@ -54,7 +54,7 @@ public class GeneratorEnemyManager : MonoBehaviour
         TextAsset spawnData = Resources.Load<TextAsset>("SpawnData");
         spawnDatas = JsonConvert.DeserializeObject<List<Spawn>>(spawnData.text);
         */
-        /*
+       /*
         GameObject go = Instantiate(bossEnemyPrefab, prefabParent.transform);
         go.transform.position = spanPoints[0].position;
         BossEnemy enemy = go.GetComponent<BossEnemy>();
@@ -80,11 +80,12 @@ public class GeneratorEnemyManager : MonoBehaviour
         }
         */
 
-
+        
         if (isStop == false)
         {
             GenerateEnemy();
         }
+
     }
 
     public void GenerateEnemy(int point, string type)
