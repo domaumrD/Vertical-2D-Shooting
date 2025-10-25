@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class TitleBackGroundManager : MonoBehaviour
 {
-
     public GameObject backGround1;
     public GameObject backGround2;
     public GameObject backGround3;
@@ -15,8 +14,6 @@ public class TitleBackGroundManager : MonoBehaviour
     public GameObject bossPrefab;
     public GameObject smallEnemyPrefab;
     public GameObject middleEnemyPrefab;
-
-
 
     public List<Transform> spawn = new List<Transform>();
 

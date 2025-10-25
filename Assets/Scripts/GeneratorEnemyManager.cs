@@ -30,11 +30,20 @@ public class GeneratorEnemyManager : MonoBehaviour
 
         TextAsset spawnData = Resources.Load<TextAsset>("SpawnData");
         spawnDatas = JsonConvert.DeserializeObject<List<Spawn>>(spawnData.text);
+
+        GameObject go = Instantiate(bossEnemyPrefab, prefabParent.transform);
+        go.transform.position = spanPoints[0].position;
+        BossEnemy enemy = go.GetComponent<BossEnemy>();
+        enemy.action = gameMain.EnemyDie;
+        enemy.addScoreAction = gameMain.AddScore;
+
     }
 
     
     void Update()
     {
+
+        /*
         delta += Time.deltaTime;
 
         if (dataIdx < spawnDatas.Count)
@@ -45,7 +54,7 @@ public class GeneratorEnemyManager : MonoBehaviour
             delta = 0f;
             GenerateEnemy(spawnDatas[dataIdx].point, spawnDatas[dataIdx].delay, spawnDatas[dataIdx].type);
             dataIdx++;
-        }
+        }*/
 
         /*if(isStop == false)
         {

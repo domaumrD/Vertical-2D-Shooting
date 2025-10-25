@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2436199724166731801}
   - component: {fileID: 371735758681786153}
   - component: {fileID: 5907976135902592359}
-  - component: {fileID: 1607145594780268253}
   - component: {fileID: 979346139998084519}
+  - component: {fileID: 4140947974247906443}
   m_Layer: 0
   m_Name: BossEnemyPrefab
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7721071851516081665}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6521739, y: 3.7043478, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -118,27 +118,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1607145594780268253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7721071851516081665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fc27ef4356e43e48a75c479f56e2542, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingPoint: {fileID: 5012211654742025539}
-  stateSprites:
-  - {fileID: 2192450021786810173, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  - {fileID: -7945901444079236628, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  enemySprite: {fileID: 371735758681786153}
-  hp: 0
-  score: 0
-  moveSpeed: 1
-  delayTime: 1
 --- !u!61 &979346139998084519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -185,6 +164,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.75, y: 2.0472643}
   m_EdgeRadius: 0
+--- !u!114 &4140947974247906443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7721071851516081665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313268e064bc2ba46af8b9ae77c380d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPatternCount: 0
+  maxPatternIndex: 0200000003000000640000000a000000
+  shootingPoint: {fileID: 5012211654742025539}
+  stateSprites:
+  - {fileID: 2192450021786810173, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  - {fileID: -7945901444079236628, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  enemySprite: {fileID: 371735758681786153}
+  hp: 3000
+  score: 3000
+  moveSpeed: 1
 --- !u!1 &8950812371776698569
 GameObject:
   m_ObjectHideFlags: 0

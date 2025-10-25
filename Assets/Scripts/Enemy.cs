@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Enemy;
 
 public class Enemy : MonoBehaviour
 {
@@ -47,7 +46,6 @@ public class Enemy : MonoBehaviour
     {
         Move();
         Attack();
-
     }
 
     private void Move()
@@ -90,8 +88,17 @@ public class Enemy : MonoBehaviour
 
         if (this.hp <= 0)
         {
-            addScoreAction(this.score);
-            action(this.transform.position);
+
+            if (action != null)
+            {
+                addScoreAction(this.score);
+            }
+
+            if (action != null) 
+            {
+                action(this.transform.position);
+            }
+
             Destroy(this.gameObject);
         }
     }
