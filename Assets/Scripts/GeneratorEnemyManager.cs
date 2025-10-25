@@ -10,7 +10,7 @@ public class GeneratorEnemyManager : MonoBehaviour
     private int enemyIdx = 0;
     private int enemySpawnIdx = 0;
     private bool isStop = false;
-    private int dataIdx = 0;
+    //private int dataIdx = 0;
 
     public GameMain gameMain;
     public GameObject prefabParent;
@@ -19,31 +19,54 @@ public class GeneratorEnemyManager : MonoBehaviour
     public List<Transform> spanPoints = new List<Transform>();  
     public List<Spawn> spawnDatas = new List<Spawn>();
 
+    public List<Queue<GameObject>> enemyPool = new List<Queue<GameObject>>();
+
     public float delyTime;
-    
+
+    private void Awake()
+    {        
+        for(int i = 0; i < enemyPrefabs.Count; i++)
+        {
+            Queue<GameObject> que = new Queue<GameObject> ();
+
+            for (int j = 0; j < 30; j++)
+            {
+                GameObject go = Instantiate(enemyPrefabs[i], prefabParent.transform);
+                go.gameObject.SetActive(false);
+                que.Enqueue(go);
+
+                Enemy enemy = go.GetComponent<Enemy>();
+                enemy.action = gameMain.EnemyDie;
+                enemy.addScoreAction = gameMain.AddScore;
+                enemy.ReturnEnemyAction = ReturnEnemy;
+            }
+
+            enemyPool.Add(que);
+        }
+    }
 
     void Start()
     {
         delta = 0f;
         enemyIdx = 0;
         isStop = false;
-
+        /*
         TextAsset spawnData = Resources.Load<TextAsset>("SpawnData");
         spawnDatas = JsonConvert.DeserializeObject<List<Spawn>>(spawnData.text);
-
+        */
+        /*
         GameObject go = Instantiate(bossEnemyPrefab, prefabParent.transform);
         go.transform.position = spanPoints[0].position;
         BossEnemy enemy = go.GetComponent<BossEnemy>();
         enemy.action = gameMain.EnemyDie;
         enemy.addScoreAction = gameMain.AddScore;
-
+        */
     }
 
     
     void Update()
     {
-
-        /*
+        /*        
         delta += Time.deltaTime;
 
         if (dataIdx < spawnDatas.Count)
@@ -52,17 +75,19 @@ public class GeneratorEnemyManager : MonoBehaviour
                 return;
 
             delta = 0f;
-            GenerateEnemy(spawnDatas[dataIdx].point, spawnDatas[dataIdx].delay, spawnDatas[dataIdx].type);
+            GenerateEnemy(spawnDatas[dataIdx].point, spawnDatas[dataIdx].type);
             dataIdx++;
-        }*/
+        }
+        */
 
-        /*if(isStop == false)
+
+        if (isStop == false)
         {
             GenerateEnemy();
-        }*/
+        }
     }
 
-    public void GenerateEnemy(int point, float delayTime, string type)
+    public void GenerateEnemy(int point, string type)
     {
         int typeIdx = 0;
 
@@ -88,7 +113,8 @@ public class GeneratorEnemyManager : MonoBehaviour
 
         Debug.Log($"idx : {typeIdx}");
 
-        GameObject go = Instantiate(enemyPrefabs[typeIdx], prefabParent.transform);
+        GameObject go = enemyPool[typeIdx].Dequeue();
+        go.SetActive(true);        
         go.transform.position = spanPoints[point].position;
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.action = gameMain.EnemyDie;
@@ -101,22 +127,31 @@ public class GeneratorEnemyManager : MonoBehaviour
         if (delta > delyTime)
         {
             delta = 0f;
-
+            Debug.Log("create Enemy");
             enemyIdx = UnityEngine.Random.Range(0, enemyPrefabs.Count);
-            GameObject go = Instantiate(enemyPrefabs[enemyIdx], prefabParent.transform);
+            GameObject go = enemyPool[enemyIdx].Dequeue();
+            go.SetActive(true);
 
+            Debug.Log($"{go.gameObject.name}"); 
             enemySpawnIdx = UnityEngine.Random.Range(0, spanPoints.Count);
             go.transform.position = spanPoints[enemySpawnIdx].position;
 
             Enemy enemy = go.GetComponent<Enemy>();
             enemy.action = gameMain.EnemyDie;
             enemy.addScoreAction = gameMain.AddScore;
+                        
         }
     }
 
     public void StopGenereEnemy()
     {
         isStop = true;
+    }
+
+    public void ReturnEnemy(GameObject enemyGo, int enemyIdx)
+    {
+        enemyPool[enemyIdx].Enqueue(enemyGo);
+        enemyGo.gameObject.SetActive(false);
     }
 
 }

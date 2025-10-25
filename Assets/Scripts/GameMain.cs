@@ -97,7 +97,7 @@ public class GameMain : MonoBehaviour
             {
                 int tempScore = child.GetComponent<Enemy>().score;
                 this.AddScore(tempScore);
-                Destroy(child.gameObject);
+                //Destroy(child.gameObject);
             }
           
         }

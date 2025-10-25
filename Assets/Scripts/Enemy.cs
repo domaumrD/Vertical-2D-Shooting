@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 
     public Action<Vector3> action;
     public Action<int> addScoreAction;
+    public Action<GameObject, int> ReturnEnemyAction;
 
     public enum BulletType
     {
@@ -28,20 +29,19 @@ public class Enemy : MonoBehaviour
 
     public BulletType bulletType;
 
+    public int enemyIndex;
     public int hp;
     public int score;
 
     public float moveSpeed;
     public float delayTime;
 
-
     void Start()
     {
         this.enemySprite.sprite = stateSprites[(int)State.Normal];
         this.delta = 0f;
     }
-
-   
+    
     void Update()
     {
         Move();
@@ -54,10 +54,9 @@ public class Enemy : MonoBehaviour
 
         if (this.transform.position.y < -7)
         {
-            Destroy(this.gameObject);
+            ReturnEnemyPool();
         }
     }
-
     private void Attack()
     {
         this.delta += Time.deltaTime;
@@ -76,7 +75,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.name == "Player Bullet 1(Clone)")
@@ -88,7 +86,6 @@ public class Enemy : MonoBehaviour
 
         if (this.hp <= 0)
         {
-
             if (action != null)
             {
                 addScoreAction(this.score);
@@ -99,7 +96,7 @@ public class Enemy : MonoBehaviour
                 action(this.transform.position);
             }
 
-            Destroy(this.gameObject);
+            ReturnEnemyPool();
         }
     }
 
@@ -113,5 +110,10 @@ public class Enemy : MonoBehaviour
     public int GetScore()
     {
         return this.score;
+    }
+
+    public void ReturnEnemyPool()
+    {
+        ReturnEnemyAction(this.gameObject, enemyIndex);
     }
 }

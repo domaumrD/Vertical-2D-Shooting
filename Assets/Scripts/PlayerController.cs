@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
             Item item = collision.gameObject.GetComponent<Item>();
             addScoreAction(item.GetItemScore());
             Debug.Log("Get Coin");
-            Destroy(collision.gameObject);
+            item.UseCompleteItem();
         }
         else if (collision.name == "BoomPrefab(Clone)")
         {
@@ -136,14 +136,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Get Boom");
             AddBoomCount();
             getBoomAction();
-            Destroy(collision.gameObject);
+            item.UseCompleteItem();
         }
         else if (collision.name == "PowerPrefab(Clone)")
         {
             Item item = collision.gameObject.GetComponent<Item>();
             addScoreAction(item.GetItemScore());
             Debug.Log("Get Power");
-            Destroy(collision.gameObject);
+            item.UseCompleteItem();
         }
         else if(collision.name == "ShieldItemPrefab(Clone)")
         {
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
             addScoreAction(item.GetItemScore());
             Debug.Log("Get Power");
             shieldAction();
-            Destroy(collision.gameObject);
+            item.UseCompleteItem();
         }
 
             Debug.Log(collision.name);

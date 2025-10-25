@@ -147,5 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a3959c9e909da47bd950ad43f5f666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIdx: 3
   moveSpeed: 2
   itemScore: 100
