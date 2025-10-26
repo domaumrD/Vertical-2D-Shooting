@@ -103,6 +103,22 @@ public class BulletManager : MonoBehaviour
         }
     }
 
+    public void DestoryAllEnemyBullet()
+    {
+        EnemyBullet[] enemybullets = enemyBulletParent.GetComponentsInChildren<EnemyBullet>(true);
+
+        if (enemybullets == null)
+            return;
+
+        foreach (EnemyBullet enemybulle in enemybullets)
+        {
+            if(enemybulle.gameObject.activeSelf == true)
+            {
+                enemybulle.UseCompleteEnemyBullet();
+            }
+        }
+    }
+
     public void CreatePlayerBullet1(Transform transform)
     {
         GameObject go = playerBulletPool[0].Dequeue();

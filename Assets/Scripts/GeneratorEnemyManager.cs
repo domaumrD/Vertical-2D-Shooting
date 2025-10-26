@@ -155,4 +155,20 @@ public class GeneratorEnemyManager : MonoBehaviour
         enemyGo.gameObject.SetActive(false);
     }
 
+    public void DestoryAllEnemy()
+    {
+        Enemy[] enemys = prefabParent.GetComponentsInChildren<Enemy>(true);
+
+        if (enemys == null)
+            return;
+
+        foreach (Enemy enemy in enemys)
+        {
+            if (enemy.gameObject.activeSelf == true)
+            {
+                enemy.ReturnEnemyPool();
+            }
+        }
+    }
+
 }

@@ -87,28 +87,9 @@ public class GameMain : MonoBehaviour
             return;
 
         fxManager.CreateBoomFx(Vector3.zero);
-
-        foreach (Transform child in enemyParent.transform)
-        {
-            if (child == null)
-                continue;
-
-            if(child.GetComponent<Enemy>() != null)
-            {
-                int tempScore = child.GetComponent<Enemy>().score;
-                this.AddScore(tempScore);
-                //Destroy(child.gameObject);
-            }
-          
-        }
-
-        foreach (Transform child in enemyBulletParent.transform)
-        {
-            if (child == null)
-                continue;
-
-            Destroy(child.gameObject);
-        }
+       
+        generatorEnemyManager.DestoryAllEnemy();
+        BulletManager.Instance.DestoryAllEnemyBullet();
 
         uiManager.UseBoom(boomcount - 1);
     }
@@ -121,11 +102,9 @@ public class GameMain : MonoBehaviour
 
     public void Hit()
     {
-
         playerController.transform.position = playerSpawnPoint.transform.position;
         StartCoroutine(PlayerSpwan());
     }
-
 
     IEnumerator PlayerSpwan()
     {

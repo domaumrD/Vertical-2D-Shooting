@@ -87,17 +87,7 @@ public class Enemy : MonoBehaviour
         }
 
         if (this.hp <= 0)
-        {
-            if (action != null)
-            {
-                addScoreAction(this.score);
-            }
-
-            if (action != null) 
-            {
-                action(this.transform.position);
-            }
-
+        {           
             ReturnEnemyPool();
         }
     }
@@ -116,6 +106,7 @@ public class Enemy : MonoBehaviour
 
     public void ReturnEnemyPool()
     {
+        addScoreAction(this.score);
         ReturnEnemyAction(this.gameObject, enemyIndex);
     }
 }

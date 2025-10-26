@@ -11,13 +11,15 @@ public class TitleMain : MonoBehaviour
     {
         titleBtn.onClick.AddListener(() =>
         {
-            AsyncOperation op =  SceneManager.LoadSceneAsync("GameScene");
-            op.completed += (opertion) =>
-            {
-                GameMain gameMain = GameObject.FindFirstObjectByType<GameMain>();
-                gameMain.Init(index);
+            SceneManager.LoadScene("LobbyScene");
 
-            };
+            //AsyncOperation op =  SceneManager.LoadSceneAsync("GameScene");
+            //op.completed += (opertion) =>
+            //{
+            //    GameMain gameMain = GameObject.FindFirstObjectByType<GameMain>();
+            //    gameMain.Init(index);
+
+            //};
 
         });
     }
