@@ -21,7 +21,9 @@ public class GeneratorEnemyManager : MonoBehaviour
 
     public List<Queue<GameObject>> enemyPool = new List<Queue<GameObject>>();
 
+    public GameObject currentBoss = null;
     public float delyTime;
+    public Action MakeBoss;
 
     private void Awake()
     {        
@@ -54,13 +56,8 @@ public class GeneratorEnemyManager : MonoBehaviour
         TextAsset spawnData = Resources.Load<TextAsset>("SpawnData");
         spawnDatas = JsonConvert.DeserializeObject<List<Spawn>>(spawnData.text);
         */
-       /*
-        GameObject go = Instantiate(bossEnemyPrefab, prefabParent.transform);
-        go.transform.position = spanPoints[0].position;
-        BossEnemy enemy = go.GetComponent<BossEnemy>();
-        enemy.action = gameMain.EnemyDie;
-        enemy.addScoreAction = gameMain.AddScore;
-        */
+
+        GenerateBoss();
     }
 
     
@@ -80,17 +77,46 @@ public class GeneratorEnemyManager : MonoBehaviour
         }
         */
 
-        
+       /* 
         if (isStop == false)
         {
             GenerateEnemy();
         }
+       */
+    }
 
+    public void GenerateBoss()
+    {
+        GameObject go = Instantiate(bossEnemyPrefab, prefabParent.transform);
+        go.transform.position = spanPoints[0].position;
+        BossEnemy enemy = go.GetComponent<BossEnemy>();
+        enemy.action = gameMain.EnemyDie;
+        enemy.addScoreAction = gameMain.AddScore;
+        currentBoss = go;
+        MakeBoss();
+    }
+
+    public int GetBossHP()
+    {       
+        if (currentBoss != null)
+        {
+            return currentBoss.GetComponent<BossEnemy>().hp;
+        }
+        else
+        {
+            return 0;
+        }   
     }
 
     public void GenerateEnemy(int point, string type)
     {
         int typeIdx = 0;
+
+        if(type == "B")
+        {
+            GenerateBoss();
+            return;
+        }
 
         switch (type)
         {

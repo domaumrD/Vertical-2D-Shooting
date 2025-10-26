@@ -93,7 +93,13 @@ public class LobbyMain : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene("GameScene");
+        AsyncOperation op =  SceneManager.LoadSceneAsync("GameScene");
+        op.completed += (opertion) =>
+        {
+            GameMain gameMain = GameObject.FindFirstObjectByType<GameMain>();
+            gameMain.Init(selectPlayerIndex);
+
+        };
     }
 
 }

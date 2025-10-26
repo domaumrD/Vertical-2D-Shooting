@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Enemy : MonoBehaviour
     public Action<Vector3> action;
     public Action<int> addScoreAction;
     public Action<GameObject, int> ReturnEnemyAction;
+
+    private Coroutine hitCoroutine;
 
     public enum BulletType
     {
@@ -77,9 +80,14 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Player Bullet 1(Clone)")
+        if (collision.GetComponent<PlayerBullet>()!= null)
         {
-            StartCoroutine(Hit());
+            if(hitCoroutine != null)
+            {
+                StopCoroutine(hitCoroutine);
+            }
+
+            hitCoroutine = StartCoroutine(Hit());
             PlayerBullet playerBullet = collision.GetComponent<PlayerBullet>();
 
             hp -= playerBullet.GetBulletDamage();
@@ -107,6 +115,7 @@ public class Enemy : MonoBehaviour
     public void ReturnEnemyPool()
     {
         addScoreAction(this.score);
+        action(this.transform.position);
         ReturnEnemyAction(this.gameObject, enemyIndex);
     }
 }

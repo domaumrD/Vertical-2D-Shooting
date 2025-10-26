@@ -104,21 +104,11 @@ public class PlayerController : MonoBehaviour
             Time.timeScale = 1f;
         }
 
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Enemy Bullet 0(Clone)")
-        {
-            EnemyBullet enemyBullet = collision.GetComponent<EnemyBullet>();
-            enemyBullet.UseCompleteEnemyBullet();
-            Destroy(collision.gameObject);
-            isHit = true;
-            hitAction();
-        }
-        else if (collision.name == "Enemy Bullet 1(Clone)")
+        if(collision.GetComponent<EnemyBullet>() != null)
         {
             EnemyBullet enemyBullet = collision.GetComponent<EnemyBullet>();
             enemyBullet.UseCompleteEnemyBullet();

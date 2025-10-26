@@ -44,7 +44,7 @@ public class GameMain : MonoBehaviour
 
     public void Init(int idx)
     {
-        Debug.Log($"{idx}");
+        Debug.Log($"로비씬에서 전달 {idx}");
     }
 
     public void EnemyDie(Vector3 transform)

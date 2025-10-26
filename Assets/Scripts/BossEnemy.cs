@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -16,6 +17,9 @@ public class BossEnemy : MonoBehaviour
 
     public Action<Vector3> action;
     public Action<int> addScoreAction;
+    public Action<int> getHpAction;
+    public Action Die;
+    public BoxCollider2D boxCollider;
 
     public enum State
     {
@@ -34,6 +38,7 @@ public class BossEnemy : MonoBehaviour
 
     void Start()
     {
+        boxCollider.enabled = false;
         this.isCoolTime = false;
         this.enemySprite.sprite = stateSprites[(int)State.Normal];
         this.moveDirection = Vector3.down;
@@ -84,12 +89,14 @@ public class BossEnemy : MonoBehaviour
                 action(this.transform.position);
             }
 
+            Die();
             Destroy(this.gameObject);
         }
     }
 
     IEnumerator Hit()
     {
+        getHpAction(this.hp);
         this.enemySprite.sprite = stateSprites[(int)State.Hit];
         yield return new WaitForSeconds(0.1f);
         this.enemySprite.sprite = stateSprites[(int)State.Normal];
@@ -152,7 +159,6 @@ public class BossEnemy : MonoBehaviour
         }
         BulletManager.Instance.CreateBossArcShot(shootingPoint, currentPatternCount, maxPatternIndex[patternIndex]);
         Debug.Log("부채모양으로 발사");
-
     }
 
     private void FireAround()
@@ -171,6 +177,7 @@ public class BossEnemy : MonoBehaviour
     IEnumerator Attack()
     {
         yield return new WaitForSeconds(5f);
+        boxCollider.enabled = true;
         Debug.Log("공격");
 
         while (this.hp > 0)

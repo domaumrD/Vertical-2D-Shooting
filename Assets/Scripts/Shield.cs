@@ -12,9 +12,10 @@ public class Shield : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Enemy Bullet 1(Clone)")
+        if (collision.GetComponent<EnemyBullet>() != null)
         {
-            Destroy(collision.gameObject);
+            EnemyBullet enemyBullet = collision.GetComponent<EnemyBullet>();
+            enemyBullet.UseCompleteEnemyBullet();      
         }
     }
 

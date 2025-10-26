@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -13,8 +14,15 @@ public class UIManager : MonoBehaviour
     public GameObject gameOverUI;
     public TMP_Text scoreText;
 
-    public int playerLifeCount;
+    public Button lobbyBtn;
+    public Button reStartBtn;
 
+    public GameObject bossHpGagueGo;
+    public Slider bossHpGauge;
+
+    public int playerLifeCount;
+    public float bossHP;
+    public float bossMaxHP;
 
     void Start()
     {
@@ -32,6 +40,48 @@ public class UIManager : MonoBehaviour
         }
 
         playerLifeCount -= 1;
+
+        lobbyBtn.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("LobbyScene");
+        });
+
+        reStartBtn.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
+
+        lobbyBtn.gameObject.SetActive(false);
+        reStartBtn.gameObject.SetActive(false);
+
+        
+    }
+
+    public void SetCurBossHP(int hp)
+    {
+        this.bossHP = hp;
+        float cur = bossHP / bossMaxHP;
+
+        Debug.Log(cur);
+        bossHpGauge.value = cur;
+    }
+
+    public void EndCurBossHP()
+    {
+        bossHpGagueGo.gameObject.SetActive(false);
+    }
+
+    public void SettingBossGauge()
+    {
+        if (bossMaxHP > 0)
+        {
+            bossHpGagueGo.SetActive(true);
+            StartCoroutine(FillBossHpGauge());
+        }
+        else
+        {
+            bossHpGagueGo.SetActive(false);
+        }
     }
 
     public void PlayerHit()
@@ -49,12 +99,12 @@ public class UIManager : MonoBehaviour
         if(playerLifeCount == -1)
         {
             gameOverUI.SetActive(true);
+            lobbyBtn.gameObject.SetActive(true);
+            reStartBtn.gameObject.SetActive(true);
             action();
         }
 
     }
-
-
 
     public void SetScore(int score)
     {
@@ -63,8 +113,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void GetBoom(int boomIndex)
-    {
- 
+    { 
         playerBooms[boomIndex].SetActive(true);
         //Debug.Log($"Boom Count: {this.boomCount}");
     }
@@ -72,6 +121,17 @@ public class UIManager : MonoBehaviour
     public void UseBoom(int boomIndex)
     {
         playerBooms[boomIndex].SetActive(false);
+    }
+
+    IEnumerator FillBossHpGauge()
+    {
+        float cur = 0;     
+        while (cur < 1)
+        {         
+            cur += Time.deltaTime;
+            bossHpGauge.value = cur;
+            yield return null;
+        }        
     }
 
 }
