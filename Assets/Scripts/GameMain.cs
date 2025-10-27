@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameMain : MonoBehaviour
 {
@@ -21,12 +22,32 @@ public class GameMain : MonoBehaviour
     private void Awake()
     {
         uiManager.action = GameOver;
+
+        EventTrigger trigger = uiManager.attackBtn.gameObject.AddComponent<EventTrigger>();
+
+        EventTrigger.Entry pointerDown = new EventTrigger.Entry();
+        pointerDown.eventID = EventTriggerType.PointerDown;
+        pointerDown.callback.AddListener((eventData) => playerController.StartShooting());
+
+        EventTrigger.Entry pointerUp = new EventTrigger.Entry();
+        pointerUp.eventID = EventTriggerType.PointerUp;
+        pointerUp.callback.AddListener((eventData) => playerController.StopShooting());
+
+        trigger.triggers.Add(pointerDown);
+        trigger.triggers.Add(pointerUp);
+
+        uiManager.boomBtn.onClick.AddListener(() => 
+        {
+            playerController.UseBoom();
+        });
+
         playerController.hitAction = uiManager.PlayerHit;
         playerController.hitAction += this.Hit;
         playerController.addScoreAction = this.AddScore;
         playerController.useBoomAction = this.UseBoom;
         playerController.shieldAction = this.Shield;
         playerController.getBoomAction = this.GetBoom;
+       
     }
 
     void Start()
@@ -37,10 +58,6 @@ public class GameMain : MonoBehaviour
         Application.targetFrameRate = 60;
     }
    
-    void Update()
-    {
-        
-    }
 
     public void Init(int idx)
     {

@@ -8,7 +8,7 @@ public class BossHpHandler : MonoBehaviour
 
     private int bossMaxHp;
 
-    void Start()
+    private void Awake()
     {
         generatorEnemyManager.MakeBoss = SetBossHpGauge;
     }

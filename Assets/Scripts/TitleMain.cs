@@ -10,8 +10,10 @@ public class TitleMain : MonoBehaviour
     {
         titleBtn.onClick.AddListener(() =>
         {
+            Debug.Log("Check Point");
             SceneManager.LoadScene("LobbyScene"); 
         });
+
     }
  
 }

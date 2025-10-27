@@ -15,7 +15,10 @@ public class UIManager : MonoBehaviour
     public TMP_Text scoreText;
 
     public Button lobbyBtn;
-    public Button reStartBtn;
+    public Button restartBtn;
+
+    public Button attackBtn;
+    public Button boomBtn;
 
     public GameObject bossHpGagueGo;
     public Slider bossHpGauge;
@@ -46,23 +49,21 @@ public class UIManager : MonoBehaviour
             SceneManager.LoadScene("LobbyScene");
         });
 
-        reStartBtn.onClick.AddListener(() =>
+        restartBtn.onClick.AddListener(() =>
         {
             SceneManager.LoadScene("GameScene");
         });
 
         lobbyBtn.gameObject.SetActive(false);
-        reStartBtn.gameObject.SetActive(false);
-
-        
+        restartBtn.gameObject.SetActive(false);               
     }
 
     public void SetCurBossHP(int hp)
-    {
+    {      
         this.bossHP = hp;
         float cur = bossHP / bossMaxHP;
 
-        Debug.Log(cur);
+        Debug.Log($"cur Value: {cur}");
         bossHpGauge.value = cur;
     }
 
@@ -100,7 +101,7 @@ public class UIManager : MonoBehaviour
         {
             gameOverUI.SetActive(true);
             lobbyBtn.gameObject.SetActive(true);
-            reStartBtn.gameObject.SetActive(true);
+            restartBtn.gameObject.SetActive(true);
             action();
         }
 

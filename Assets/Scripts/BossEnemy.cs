@@ -97,6 +97,7 @@ public class BossEnemy : MonoBehaviour
     IEnumerator Hit()
     {
         getHpAction(this.hp);
+
         this.enemySprite.sprite = stateSprites[(int)State.Hit];
         yield return new WaitForSeconds(0.1f);
         this.enemySprite.sprite = stateSprites[(int)State.Normal];
