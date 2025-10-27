@@ -9,9 +9,11 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public Action action;
+    public Action clearAction;
     public List<GameObject> playerlifes = new List<GameObject>();
     public List<GameObject> playerBooms = new List<GameObject>();
     public GameObject gameOverUI;
+    public GameObject gameClearUI;
     public TMP_Text scoreText;
 
     public Button lobbyBtn;
@@ -36,6 +38,7 @@ public class UIManager : MonoBehaviour
     public void Init()
     {
         gameOverUI.SetActive(false);
+        gameClearUI.SetActive(false);
 
         for (int i = 0; i < playerLifeCount; i++)
         {
@@ -70,6 +73,7 @@ public class UIManager : MonoBehaviour
     public void EndCurBossHP()
     {
         bossHpGagueGo.gameObject.SetActive(false);
+        clearAction();
     }
 
     public void SettingBossGauge()

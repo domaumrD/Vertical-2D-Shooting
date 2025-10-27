@@ -12,12 +12,14 @@ public class PlayerController : MonoBehaviour
     private float delta;
     private float curTime;
 
-    private bool isgameOver = false;
+    public bool isgameOver = false;
+
     public bool isHit = false;
     public bool isShooting = false;
 
     public float moveSpeed;
     public float shootingDelyTime;
+    public float maxYPos;
 
     public Transform shootingPoint;
     public Transform shieldPoint;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
         isHit = false;
         isShooting = false; 
         boomCount = 3;
+        maxYPos = 4.5f;
     }
 
     void Update()
@@ -63,7 +66,7 @@ public class PlayerController : MonoBehaviour
         this.transform.Translate(dir * moveSpeed * Time.deltaTime);
         ybound = transform.position.y;
         xbound = transform.position.x;
-        ybound = Mathf.Clamp(ybound, -4.5f, 4.5f);
+        ybound = Mathf.Clamp(ybound, -4.5f, maxYPos);
         xbound = Mathf.Clamp(xbound, -2.3f, 2.3f);
         this.transform.position = new Vector2(xbound, ybound);
 

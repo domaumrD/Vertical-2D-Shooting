@@ -55,11 +55,20 @@ public class LobbyMain : MonoBehaviour
 
     public void SelectPlayerInit()
     {
+        int index = 0;
+
         for (int i = 0; i < player.Count; i++)
         {
-            LobbyPlayer startPlayer = player[i].GetComponent<LobbyPlayer>();
+            index = i;
+            LobbyPlayer startPlayer = player[index].GetComponent<LobbyPlayer>();
             startPlayer.LobbyPlayerInit(player.Count);
             startPlayer.selectAction = SelectPlayer;
+
+            startPlayer.btn.onClick.AddListener(() => 
+            {
+                startPlayer.selectAction(startPlayer.playerNum);
+            });
+
         }      
     }
 

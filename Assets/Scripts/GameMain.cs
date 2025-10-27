@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameMain : MonoBehaviour
 {
@@ -41,6 +42,8 @@ public class GameMain : MonoBehaviour
             playerController.UseBoom();
         });
 
+        uiManager.clearAction = ClearGame;
+
         playerController.hitAction = uiManager.PlayerHit;
         playerController.hitAction += this.Hit;
         playerController.addScoreAction = this.AddScore;
@@ -64,15 +67,18 @@ public class GameMain : MonoBehaviour
         Debug.Log($"로비씬에서 전달 {idx}");
     }
 
+    public void ClearGame()
+    {
+        generatorEnemyManager.StopGenereEnemy();
+        //playerController.StopAction();
+        playerController.maxYPos += 9.0f;
+        StartCoroutine(EndPlayerStage());
+
+    }
+
     public void EnemyDie(Vector3 transform)
     {
         StartCoroutine(EnemyDead(transform));
-    }
-
-    IEnumerator EnemyDead(Vector3 transform)
-    {
-        yield return new WaitForSeconds(fxManager.CreateExplosionFx(transform));   
-        itemGeratorManager.CreateItem(transform);
     }
 
     public void GameOver()
@@ -132,6 +138,32 @@ public class GameMain : MonoBehaviour
             yield return null;
         }
         playerController.isHit = false;
+    }
+
+    IEnumerator EnemyDead(Vector3 transform)
+    {
+        yield return new WaitForSeconds(fxManager.CreateExplosionFx(transform));
+        itemGeratorManager.CreateItem(transform);
+    }
+
+    IEnumerator EndPlayerStage()
+    {
+        float time = 0f;
+        generatorEnemyManager.DestoryAllEnemy();
+        BulletManager.Instance.DestoryAllEnemyBullet();
+        yield return new WaitForSeconds(2.0f);
+
+        uiManager.gameClearUI.SetActive(true);
+        playerController.isgameOver = true;
+
+        while (time < 5.0f)
+        {
+            time += Time.deltaTime;
+            playerController.transform.Translate(Vector3.up * 2.5f * Time.deltaTime);
+            yield return null;
+        }
+
+        SceneManager.LoadScene("LobbyScene");
     }
 
 }

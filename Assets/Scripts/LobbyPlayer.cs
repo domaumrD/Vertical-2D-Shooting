@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyPlayer : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class LobbyPlayer : MonoBehaviour
     public Action<int> selectAction;
 
     public SpriteRenderer spriteRenderer;
+    public Button btn;
 
     void OnMouseDown()
     {

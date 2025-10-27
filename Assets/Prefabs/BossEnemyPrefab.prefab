@@ -184,7 +184,7 @@ MonoBehaviour:
   - {fileID: 2192450021786810173, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   - {fileID: -7945901444079236628, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   enemySprite: {fileID: 371735758681786153}
-  hp: 500
+  hp: 300
   score: 3000
   moveSpeed: 1
 --- !u!1 &8950812371776698569
