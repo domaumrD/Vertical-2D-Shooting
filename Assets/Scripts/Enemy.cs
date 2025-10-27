@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Enemy : MonoBehaviour
+public class Enemy : BaseEnemy
 {
     private float delta = 0f;
 
-    public Action<Vector3> action;
-    public Action<int> addScoreAction;
+    //public Action<Vector3> action;
+    //public Action<int> addScoreAction;
     public Action<GameObject, int> ReturnEnemyAction;
 
     private Coroutine hitCoroutine;
@@ -33,40 +33,39 @@ public class Enemy : MonoBehaviour
     public BulletType bulletType;
 
     public int enemyIndex;
-    public int hp;
-    public int score;
+    //public int hp;
+    //public int score;
 
-    public float moveSpeed;
+    //public float moveSpeed;
     public float delayTime;
 
-    void Start()
+    protected override void Start()
     {
-        this.enemySprite.sprite = stateSprites[(int)State.Normal];
-        this.delta = 0f;
-    }
-    
-    void Update()
-    {
-        Move();
-        Attack();
+        enemySprite.sprite = stateSprites[(int)State.Normal];
+        delta = 0f;
     }
 
-    private void Move()
+    protected override void Update()
     {
-        this.transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
+       base.Update();
+    }
 
-        if (this.transform.position.y < -7)
+    protected override void Move()
+    {
+        transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
+
+        if (transform.position.y < -7)
         {
             ReturnEnemyPool();
         }
     }
-    private void Attack()
+    protected override void Attack()
     {
-        this.delta += Time.deltaTime;
+        delta += Time.deltaTime;
 
-        if (this.delta > this.delayTime)
+        if (delta > delayTime)
         {
-            this.delta = 0f;
+            delta = 0f;
 
             if (bulletType == BulletType.NORMAL)
             {
@@ -94,7 +93,7 @@ public class Enemy : MonoBehaviour
             playerBullet.ReturnPlayerBulletPool();
         }
 
-        if (this.hp <= 0)
+        if (hp <= 0)
         {           
             ReturnEnemyPool();
         }
@@ -102,20 +101,20 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Hit()
     {
-        this.enemySprite.sprite = stateSprites[(int)State.Hit];
+        enemySprite.sprite = stateSprites[(int)State.Hit];
         yield return new WaitForSeconds(0.1f);
-        this.enemySprite.sprite = stateSprites[(int)State.Normal];
+        enemySprite.sprite = stateSprites[(int)State.Normal];
     }
 
     public int GetScore()
     {
-        return this.score;
+        return score;
     }
 
     public void ReturnEnemyPool()
     {
-        addScoreAction(this.score);
-        action(this.transform.position);
-        ReturnEnemyAction(this.gameObject, enemyIndex);
+        addScoreAction(score);
+        action(transform.position);
+        ReturnEnemyAction(gameObject, enemyIndex);
     }
 }

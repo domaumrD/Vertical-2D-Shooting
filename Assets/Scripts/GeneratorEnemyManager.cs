@@ -77,7 +77,7 @@ public class GeneratorEnemyManager : MonoBehaviour
         }
         */
 
-       /* 
+        /*
         if (isStop == false)
         {
             GenerateEnemy();

@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
-public class BossEnemy : MonoBehaviour
+public class BossEnemy : BaseEnemy
 {
     private Vector3 moveDirection = Vector3.down;
 
@@ -15,10 +14,10 @@ public class BossEnemy : MonoBehaviour
     public int currentPatternCount;
     public int[] maxPatternIndex;
 
-    public Action<Vector3> action;
-    public Action<int> addScoreAction;
+    //public Action<Vector3> action;
+    //public Action<int> addScoreAction;
     public Action<int> getHpAction;
-    public Action Die;
+    public new Action Die;
     public BoxCollider2D boxCollider;
 
     public enum State
@@ -31,36 +30,40 @@ public class BossEnemy : MonoBehaviour
     public Sprite[] stateSprites;
     public SpriteRenderer enemySprite;
 
-    public int hp;
-    public int score;
+    //public int hp;
+    //public int score;
 
-    public float moveSpeed;
+    // public float moveSpeed;
 
-    void Start()
+    protected override void Start()
     {
         boxCollider.enabled = false;
-        this.isCoolTime = false;
-        this.enemySprite.sprite = stateSprites[(int)State.Normal];
-        this.moveDirection = Vector3.down;
-        StartCoroutine(Attack());
+        isCoolTime = false;
+        enemySprite.sprite = stateSprites[(int)State.Normal];
+        moveDirection = Vector3.down;
+        StartCoroutine(AttackPatten());
     }
 
-
-    void Update()
+    protected override void Update()
     {
         Move();
     }
 
-    private void Move()
+    protected override void Attack()
     {
-        this.transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        
+    }
 
-        if (this.transform.position.y < 3)
+    protected override void Move()
+    {
+        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+
+        if (transform.position.y < 3)
         {
             moveDirection = Vector3.up;
-            this.moveSpeed = 0.1f;
+            moveSpeed = 0.1f;
         }
-        else if (this.transform.position.y > 3.3f)
+        else if (transform.position.y > 3.3f)
         {
             moveDirection = Vector3.down;
         }
@@ -77,35 +80,35 @@ public class BossEnemy : MonoBehaviour
             playerBullet.ReturnPlayerBulletPool();
         }
 
-        if (this.hp <= 0)
+        if (hp <= 0)
         {
             if (action != null)
             {
-                addScoreAction(this.score);
+                addScoreAction(score);
             }
 
             if (action != null)
             {
-                action(this.transform.position);
+                action(transform.position);
             }
 
             Die();
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
     IEnumerator Hit()
     {
-        getHpAction(this.hp);
+        getHpAction(hp);
 
-        this.enemySprite.sprite = stateSprites[(int)State.Hit];
+        enemySprite.sprite = stateSprites[(int)State.Hit];
         yield return new WaitForSeconds(0.1f);
-        this.enemySprite.sprite = stateSprites[(int)State.Normal];
+        enemySprite.sprite = stateSprites[(int)State.Normal];
     }
 
     public int GetScore()
     {
-        return this.score;
+        return score;
     }
 
     public void AddPatternIndex()
@@ -128,7 +131,7 @@ public class BossEnemy : MonoBehaviour
         if(currentPatternCount >= maxPatternIndex[patternIndex])
         {
             AddPatternIndex();
-            this.isCoolTime = true;
+            isCoolTime = true;
         }
         BulletManager.Instance.CreateSingleShot(shootingPoint);       
         Debug.Log("앞으로 4발 발사");
@@ -141,7 +144,7 @@ public class BossEnemy : MonoBehaviour
         if (currentPatternCount >= maxPatternIndex[patternIndex])
         {
             AddPatternIndex();
-            this.isCoolTime = true;
+            isCoolTime = true;
         }
         
         BulletManager.Instance.CreateBossShotGun(shootingPoint);
@@ -156,7 +159,7 @@ public class BossEnemy : MonoBehaviour
         if (currentPatternCount >= maxPatternIndex[patternIndex])
         {
             AddPatternIndex();
-            this.isCoolTime = true;
+            isCoolTime = true;
         }
         BulletManager.Instance.CreateBossArcShot(shootingPoint, currentPatternCount, maxPatternIndex[patternIndex]);
         Debug.Log("부채모양으로 발사");
@@ -168,20 +171,20 @@ public class BossEnemy : MonoBehaviour
         if (currentPatternCount >= maxPatternIndex[patternIndex])
         {
             AddPatternIndex();
-            this.isCoolTime = true;
+            isCoolTime = true;
         }
         BulletManager.Instance.CreateBossAroundShot(shootingPoint);
         Debug.Log("원 형태로 전체 공격");
 
     }
 
-    IEnumerator Attack()
+    IEnumerator AttackPatten()
     {
         yield return new WaitForSeconds(5f);
         boxCollider.enabled = true;
         Debug.Log("공격");
 
-        while (this.hp > 0)
+        while (hp > 0)
         {            
             if (patternIndex == 0)
             {
